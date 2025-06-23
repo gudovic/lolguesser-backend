@@ -15,7 +15,12 @@ app.use('/api/champion', championRoutes);
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
-  const PORT = process.env.PORT || 3000;
-  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    console.log('✅ MongoDB connected');
   })
-  .catch(err => console.error(err));
+  .catch(err => {
+    console.error('❌ MongoDB connection failed:', err);
+  })
+  .finally(() => {
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+  });
