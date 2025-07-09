@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 router.post('/', (req, res) => {
+  res.json({ result: 'correct', feedback: {} }); // dummy test
+});
+
+router.post('/', (req, res) => {
   const guessedChamp = req.body;
   const target = req.app.locals.targetChampion;
 
