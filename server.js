@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const championRoutes = require('./routes/champion');
+const guessRoutes = require('./routes/guess');
 
 dotenv.config();
 
@@ -12,6 +13,8 @@ app.use(express.json());
 app.use(cors());
 
 app.use('/api/champion', championRoutes);
+app.use('/api/guess', guessRoutes);
+
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {

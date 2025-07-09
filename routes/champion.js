@@ -21,7 +21,12 @@ router.get('/daily', (req, res) => {
   const index = seed % champList.length;
 
   const dailyChampion = champList[index];
+
+  req.app.locals.targetChampion = dailyChampion;
+
   res.json(dailyChampion);
 });
 
 module.exports = router;
+
+app.use(express.json());
