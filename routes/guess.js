@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-router.post('/guess', (req, res) => {
+router.post('/', (req, res) => {
   const guessedChamp = req.body;
   const target = req.app.locals.targetChampion;
 
