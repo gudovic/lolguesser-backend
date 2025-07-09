@@ -28,5 +28,3 @@ router.get('/daily', (req, res) => {
 });
 
 module.exports = router;
-
-app.use(express.json());
