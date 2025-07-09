@@ -9,6 +9,8 @@ router.post('/', (req, res) => {
   const guessedChamp = req.body;
   const target = req.app.locals.targetChampion;
 
+  console.log("✅ Guess route hit!");
+
   if (!target) {
     return res.status(400).json({ error: 'Daily champion not set yet. Call champion first.' });
   }
