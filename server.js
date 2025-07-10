@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const championRoutes = require('./routes/champion');
 const guessRoutes = require('./routes/guess');
+const signupRoute = require('./routes/signup')
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ app.use(cors());
 
 app.use('/api/champion', championRoutes);
 app.use('/api/guess', guessRoutes);
+app.use('/api/signup', signupRoute)
 
 
 mongoose.connect(process.env.MONGO_URI)
