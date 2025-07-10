@@ -5,7 +5,7 @@ const User = require('../models/User');
 
 const SALT_ROUNDS = 10;
 
-router.post('/signup', async (req, res) => {
+router.post('/', async (req, res) => {
     const {username, password} = req.body;
 
     try {
