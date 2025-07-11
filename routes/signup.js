@@ -7,6 +7,7 @@ const SALT_ROUNDS = 10;
 
 router.post('/', async (req, res) => {
     const {username, password} = req.body;
+    username = username.trim().toLowerCase();
 
     try {
         const existingUser = await User.findOne({username});
