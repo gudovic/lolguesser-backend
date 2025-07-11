@@ -14,11 +14,11 @@ dotenv.config();
 
 const app = express();
 
-app.use(express.json());
 app.use(cors({
-  origin: ['http://localhost:5500', 'https://mygae.netlify.app'],
+  origin: ['http://localhost:5500', 'https://lolguesser.netlify.app'],
   credentials: true
 }));
+app.use(express.json());
 app.use(cookieParser());
 
 app.use('/api/champion', championRoutes);
