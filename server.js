@@ -16,7 +16,7 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-  origin: ['http://localhost:5500', 'https://lolguesser.netlify.app'],
+  origin: ['http://localhost:5500', 'https://lolguesser.netlify.app', 'https://lolgiss.com', 'http://www.lolgiss.com'],
   credentials: true
 }));
 app.use(express.json());
