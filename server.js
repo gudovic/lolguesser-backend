@@ -2,20 +2,30 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
+
 const championRoutes = require('./routes/champion');
 const guessRoutes = require('./routes/guess');
-const signupRoute = require('./routes/signup')
+const signupRoute = require('./routes/signup');
+const loginRoute = require('./routes/login');
+const profileRoute = require('./routes/profile');
 
 dotenv.config();
 
-
 const app = express();
+
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:5500', 'https://mygae.netlify.app'],
+  credentials: true
+}));
+app.use(cookieParser());
 
 app.use('/api/champion', championRoutes);
 app.use('/api/guess', guessRoutes);
-app.use('/api/signup', signupRoute)
+app.use('/api/signup', signupRoute);
+app.use('/api/login', loginRoute);
+app.use('/api/profile', profileRoute);
 
 
 mongoose.connect(process.env.MONGO_URI)
