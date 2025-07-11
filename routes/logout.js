@@ -6,6 +6,7 @@ router.post('/', async (req, res) => {
     httpOnly: true,
     secure: true,
     sameSite: 'None',
+    domain: '.lolgiss.com',
     path: '/'
   });
      res.status(200).json({ message: 'Logged out successfully' });

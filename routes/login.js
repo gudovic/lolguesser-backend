@@ -34,6 +34,7 @@ router.post('/', async (req, res) => {
             secure: true,
             sameSite: 'None',
             maxAge: maxAge,
+            domain: '.lolgiss.com',
             path: '/'
         });
     console.log(`✅ Cookie sent to user ${user.username}, remember: ${remember}`);
