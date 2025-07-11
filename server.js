@@ -9,6 +9,7 @@ const guessRoutes = require('./routes/guess');
 const signupRoute = require('./routes/signup');
 const loginRoute = require('./routes/login');
 const profileRoute = require('./routes/profile');
+const logoutRoute = require('./routes/logout');
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use('/api/guess', guessRoutes);
 app.use('/api/signup', signupRoute);
 app.use('/api/login', loginRoute);
 app.use('/api/profile', profileRoute);
+app.use('/api/logout', logoutRoute);
 
 
 mongoose.connect(process.env.MONGO_URI)
