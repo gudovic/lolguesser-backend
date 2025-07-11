@@ -6,7 +6,7 @@ const User = require('../models/User');
 const SALT_ROUNDS = 10;
 
 router.post('/', async (req, res) => {
-    const {username, password} = req.body;
+    let {username, password} = req.body;
     username = username.trim().toLowerCase();
 
     try {

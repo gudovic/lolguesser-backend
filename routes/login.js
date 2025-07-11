@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 
 
 router.post('/', async (req, res) => {
-    const {username, password, remember} = req.body;
+    let {username, password, remember} = req.body;
     username = username.trim().toLowerCase();
 
     try {
