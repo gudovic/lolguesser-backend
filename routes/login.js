@@ -32,7 +32,7 @@ router.post('/', async (req, res) => {
         res.cookie('token', token, {
             httpOnly: true,
             secure: true,
-            sameSite: 'Strict',
+            sameSite: 'None',
             maxAge: maxAge,
             path: '/'
         });
