@@ -96,7 +96,39 @@
         timestamp: { $gte: start, $lte: end }
       }).sort({ timestamp: 1 });
 
-      res.json({ guesses });
+  const guessesWithFeedback = guesses.map(g => {
+  const guessedChamp = g.guessedChamp;
+  const keys = ['gender', 'position', 'species', 'resource', 'rangeType', 'region', 'releaseYear'];
+  const feedback = {};
+
+  for (let key of keys) {
+    const guessValue = guessedChamp[key];
+    const targetValue = target[key];
+
+    const guessArr = Array.isArray(guessValue) ? [...guessValue].sort() : [guessValue];
+    const targetArr = Array.isArray(targetValue) ? [...targetValue].sort() : [targetValue];
+
+    if (key === 'releaseYear') {
+      if (guessValue > targetValue) feedback[key] = 'arrowUp';
+      else if (guessValue < targetValue) feedback[key] = 'arrowDown';
+      else feedback[key] = 'green';
+    } else {
+      const fullMatch = JSON.stringify(guessArr) === JSON.stringify(targetArr);
+      const partialMatch = guessArr.some(val => targetArr.includes(val));
+
+      if (fullMatch) feedback[key] = 'green';
+      else if (partialMatch) feedback[key] = 'yellow';
+      else feedback[key] = 'red';
+    }
+  }
+
+  return {
+    guessedChamp,
+    feedback
+  };
+});
+
+res.json({ guesses: guessesWithFeedback });
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: 'Failed to fetch guesses' });
