@@ -2,13 +2,12 @@
   const jwt = require('jsonwebtoken');
   const Guess = require('../models/Guesses');
   const router = express.Router();
+  const getDailyChampion = require('./champion')
 
   router.post('/', async (req, res) => {
     const guessedChamp = req.body;
-    const getDailyChampion = require('./champion');
 
     const target = getDailyChampion();
-
     console.log("✅ Guess route hit!");
 
     if (!target) {
@@ -70,6 +69,7 @@
   });
 
   router.get('/today', async (req, res) => {
+    const target = getDailyChampion();
     let user = null;
     try {
       const token = req.cookies.token;
@@ -84,8 +84,6 @@
     start.setHours(0, 0, 0, 0);
     const end = new Date();
     end.setHours(23, 59, 59, 999);
-
-    const target = req.app.locals.targetChampion;
 
     if (!target) {
       return res.status(400).json({ error: 'No target set today' });
