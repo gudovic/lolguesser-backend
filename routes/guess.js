@@ -122,9 +122,12 @@
     }
   }
 
+  const result = guessedChamp.name === target.name ? 'correct' : 'wrong';
+
   return {
     guessedChamp,
-    feedback
+    feedback,
+    result
   };
 });
 
