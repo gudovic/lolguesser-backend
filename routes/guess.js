@@ -5,7 +5,9 @@
 
   router.post('/', async (req, res) => {
     const guessedChamp = req.body;
-    const target = req.app.locals.targetChampion;
+    const getDailyChampion = require('./champion');
+
+    const target = getDailyChampion();
 
     console.log("✅ Guess route hit!");
 
