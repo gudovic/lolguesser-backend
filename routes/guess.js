@@ -48,7 +48,7 @@
       }
     }
     
-    const result = guessedChamp.name === target.name ? 'correct' : 'wrong';
+    const result = guessedChamp.name === target.name ? 'correct' : 'incorrect';
 
       if (user) {
       try {
@@ -56,7 +56,8 @@
           userId: user.userId,
           username: user.username,
           guessedChamp: guessedChamp,
-          targetChamp: target
+          targetChamp: target,
+          result
         });
         await newGuess.save();
       } catch (err) {
@@ -122,7 +123,7 @@
     }
   }
 
-  const result = guessedChamp.name === target.name ? 'correct' : 'wrong';
+  const result = guessedChamp.name === target.name ? 'correct' : 'incorrect';
 
   return {
     guessedChamp,
