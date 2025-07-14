@@ -10,6 +10,7 @@ const signupRoute = require('./routes/signup');
 const loginRoute = require('./routes/login');
 const profileRoute = require('./routes/profile');
 const logoutRoute = require('./routes/logout');
+const statsRoute = require('./routes/stats');
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
+app.use('/api/stats', statsRoute);
 app.use('/api/champion', championRoutes);
 app.use('/api/guess', guessRoutes);
 app.use('/api/signup', signupRoute);
