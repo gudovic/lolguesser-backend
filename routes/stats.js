@@ -18,9 +18,20 @@ router.get('/', async (req, res) => {
 
     const groupedByDate = {};
     for (const guess of userGuesses) {
-      const date = new Date(guess.createdAt).toISOString().split('T')[0];
-      if (!groupedByDate[date]) groupedByDate[date] = [];
-      groupedByDate[date].push(guess);
+      if (!guess.createdAt) {
+        console.warn('⚠️ guess.createdAt is missing:', guess);
+        continue; 
+        }
+
+        const date = new Date(guess.createdAt);
+        if (isNaN(date)) {
+        console.warn('⚠️ Invalid date:', guess.createdAt);
+        continue;
+        }
+
+        const dateString = date.toISOString().split('T')[0];
+            if (!groupedByDate[dateString]) groupedByDate[dateString] = [];
+            groupedByDate[dateString].push(guess);
     }
 
     const gamesPlayed = Object.keys(groupedByDate).length;
