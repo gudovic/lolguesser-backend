@@ -5,7 +5,7 @@ const guessSchema = new mongoose.Schema({
   username: { type: String, required: true },
   guessedChamp: { type: Object, required: true },
   targetChamp: { type: Object, required: true },
-  timestamp: { type: Date, default: Date.now }
-});
+  result: { type: String, enum: ['correct', 'incorrect'], required: true }
+}, { timestamps: true });
 
 module.exports = mongoose.model('Guess', guessSchema);
