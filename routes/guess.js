@@ -94,8 +94,8 @@
       const guesses = await Guess.find({
         userId: user.userId,
         'targetChamp.name': target.name,
-        timestamp: { $gte: start, $lte: end }
-      }).sort({ timestamp: 1 });
+        createdAt: { $gte: start, $lte: end }
+      }).sort({ createdAt: 1 });
 
   const guessesWithFeedback = guesses.map(g => {
   const guessedChamp = g.guessedChamp;
