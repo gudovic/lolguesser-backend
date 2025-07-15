@@ -47,7 +47,8 @@ router.get('/', async (req, res) => {
     const avgYearDiff = (
       yearDiffs.reduce((sum, d) => sum + d, 0) / (yearDiffs.length || 1)
     ).toFixed(1);
-      
+    
+    // Streak
     const playedDates = new Set(
       Object.keys(groupedByDate)
     );
@@ -65,6 +66,16 @@ router.get('/', async (req, res) => {
         break;
       }
     }
+    // 7 last games
+    const lastGames = Object.entries(groupedByDate)
+      .sort((a, b) => new Date(b[0]) - new Date(a[0])) 
+      .slice(0, 7) 
+      .map(([date, guesses]) => ({
+        date,
+        guessCount: guesses.length
+      }))
+      .reverse(); 
+
     res.status(200).json({
       username,
       totalGuesses,
@@ -73,7 +84,8 @@ router.get('/', async (req, res) => {
       oneshots,
       winRate,
       avgYearDiff,
-      streak
+      streak,
+      lastGames
     });
 
   } catch (err) {
