@@ -11,6 +11,7 @@ const loginRoute = require('./routes/login');
 const profileRoute = require('./routes/profile');
 const logoutRoute = require('./routes/logout');
 const statsRoute = require('./routes/stats');
+const leaderboardRoute = require('.routes/leaderboard');
 
 dotenv.config();
 
@@ -30,6 +31,7 @@ app.use('/api/signup', signupRoute);
 app.use('/api/login', loginRoute);
 app.use('/api/profile', profileRoute);
 app.use('/api/logout', logoutRoute);
+app.use('/api/leaderboard', leaderboardRoute);
 
 
 mongoose.connect(process.env.MONGO_URI)
