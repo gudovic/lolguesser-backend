@@ -11,7 +11,7 @@ const loginRoute = require('./routes/login');
 const profileRoute = require('./routes/profile');
 const logoutRoute = require('./routes/logout');
 const statsRoute = require('./routes/stats');
-const leaderboardRoute = require('.routes/leaderboard');
+const leaderboardRoute = require('./routes/leaderboard');
 
 dotenv.config();
 
