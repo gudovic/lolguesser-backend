@@ -25,25 +25,34 @@ try {
         oneshotGames: { $sum: "$oneshotThisDay" }
         }
     },
-{
-  $setWindowFields: {
-    partitionBy: null,
-    sortBy: { avgGuesses: 1 },
-    output: {
-      avgGuessRank: { $rank: {} }
+    {
+    $setWindowFields: {
+        partitionBy: null,
+        sortBy: { avgGuesses: 1 },
+        output: {
+        avgGuessRank: { $rank: {} }
+        }
     }
-  }
-},
-{
-  $setWindowFields: {
-    partitionBy: null,
-    sortBy: { oneshotGames: -1 },
-    output: {
-      oneshotRank: { $rank: {} }
+    },
+    {
+    $setWindowFields: {
+        partitionBy: null,
+        sortBy: { oneshotGames: -1 },
+        output: {
+        oneshotRank: { $rank: {} }
+        }
     }
-  }
-}
+    }
     ,
+    {
+    $setWindowFields: {
+        partitionBy: null,
+        sortBy: { totalGames: -1 },
+        output: {
+        totalGamesRank: { $rank: {} }
+        }
+    }
+    },
     {
         $project: {
         username: "$_id",
@@ -51,15 +60,14 @@ try {
         avgGuesses: 1,
         avgGuessRank: 1,
         totalGames: 1,
+        totalGamesRank: 1,
         oneshotGames: 1,
         oneshotRank: 1
         }
     },
-    {
-        $sort: { avgGuessRank: 1 }
-    }
     ];
     const result = await Guess.aggregate(pipeline);
+
     res.json(result);
     } catch (err) {
     console.error('❌ Leaderboard aggregation failed:', err);
