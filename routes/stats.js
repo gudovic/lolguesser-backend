@@ -47,7 +47,24 @@ router.get('/', async (req, res) => {
     const avgYearDiff = (
       yearDiffs.reduce((sum, d) => sum + d, 0) / (yearDiffs.length || 1)
     ).toFixed(1);
+      
+    const playedDates = new Set(
+      Object.keys(groupedByDate)
+    );
 
+    let streak = 0;
+    let today = new Date();
+    today.setUTCHours(0, 0, 0, 0); 
+
+    while (true) {
+      const iso = today.toISOString().split('T')[0];
+      if (playedDates.has(iso)) {
+        streak++;
+        today.setDate(today.getDate() - 1);
+      } else {
+        break;
+      }
+    }
     res.status(200).json({
       username,
       totalGuesses,
@@ -55,7 +72,8 @@ router.get('/', async (req, res) => {
       avgGuesses,
       oneshots,
       winRate,
-      avgYearDiff
+      avgYearDiff,
+      streak
     });
 
   } catch (err) {

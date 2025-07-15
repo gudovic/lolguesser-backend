@@ -60,7 +60,6 @@ try {
     }
     ];
     const result = await Guess.aggregate(pipeline);
-    console.log(result);
     res.json(result);
     } catch (err) {
     console.error('❌ Leaderboard aggregation failed:', err);
