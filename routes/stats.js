@@ -76,18 +76,19 @@ router.get('/', async (req, res) => {
       }))
       .reverse(); 
     // Accuracy 
+    const arraysOverlap = (a, b) => a.some(val => b.includes(val));
     const total = userGuesses.length;
       let genderCorrect = 0;
       let regionCorrect = 0;
       let positionCorrect = 0;
       let speciesCorrect = 0;
 
-      userGuesses.forEach(g => {
-        if (g.guessedChamp.gender === g.targetChamp.gender) genderCorrect++;
-        if (g.guessedChamp.region === g.targetChamp.region) regionCorrect++;
-        if (g.guessedChamp.position === g.targetChamp.position) positionCorrect++;
-        if (g.guessedChamp.species === g.targetChamp.species) speciesCorrect++;
-      });
+    userGuesses.forEach(g => {
+      if (g.guessedChamp.gender === g.targetChamp.gender) genderCorrect++;
+      if (arraysOverlap(g.guessedChamp.region, g.targetChamp.region)) regionCorrect++;
+      if (arraysOverlap(g.guessedChamp.position, g.targetChamp.position)) positionCorrect++;
+      if (arraysOverlap(g.guessedChamp.species, g.targetChamp.species)) speciesCorrect++;
+    });
 
       const accuracy = {
         gender: ((genderCorrect / total) * 100).toFixed(0),
@@ -106,11 +107,10 @@ router.get('/', async (req, res) => {
 
       allGuesses.forEach(g => {
         if (g.guessedChamp.gender === g.targetChamp.gender) globalGenderCorrect++;
-        if (g.guessedChamp.region === g.targetChamp.region) globalRegionCorrect++;
-        if (g.guessedChamp.position === g.targetChamp.position) globalPositionCorrect++;
-        if (g.guessedChamp.species === g.targetChamp.species) globalSpeciesCorrect++;
+        if (arraysOverlap(g.guessedChamp.region, g.targetChamp.region)) globalRegionCorrect++;
+        if (arraysOverlap(g.guessedChamp.position, g.targetChamp.position)) globalPositionCorrect++;
+        if (arraysOverlap(g.guessedChamp.species, g.targetChamp.species)) globalSpeciesCorrect++;
       });
-
       const globalAccuracy = {
         gender: ((globalGenderCorrect / globalTotal) * 100).toFixed(0),
         region: ((globalRegionCorrect / globalTotal) * 100).toFixed(0),
