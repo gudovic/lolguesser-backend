@@ -25,24 +25,24 @@ try {
         oneshotGames: { $sum: "$oneshotThisDay" }
         }
     },
-   {
-    $setWindowFields: {
-        partitionBy: null,
-        sortBy: { avgGuesses: 1 },
-        output: {
-        avgGuessRank: {
-            $rank: {
-            sortBy: { avgGuesses: 1 }
-            }
-        },
-        oneshotRank: {
-            $rank: {
-            sortBy: { oneshotGames: -1 }
-            }
-        }
-        }
+{
+  $setWindowFields: {
+    partitionBy: null,
+    sortBy: { avgGuesses: 1 },
+    output: {
+      avgGuessRank: { $rank: {} }
     }
+  }
+},
+{
+  $setWindowFields: {
+    partitionBy: null,
+    sortBy: { oneshotGames: -1 },
+    output: {
+      oneshotRank: { $rank: {} }
     }
+  }
+}
     ,
     {
         $project: {
