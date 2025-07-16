@@ -12,6 +12,7 @@ const profileRoute = require('./routes/profile');
 const logoutRoute = require('./routes/logout');
 const statsRoute = require('./routes/stats');
 const leaderboardRoute = require('./routes/leaderboard');
+const yesterdayRoute = require('./routes/yesterday');
 
 dotenv.config();
 
@@ -32,7 +33,7 @@ app.use('/api/login', loginRoute);
 app.use('/api/profile', profileRoute);
 app.use('/api/logout', logoutRoute);
 app.use('/api/leaderboard', leaderboardRoute);
-
+app.use('api/yesterday', yesterdayRoute);
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
