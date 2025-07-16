@@ -33,7 +33,7 @@ app.use('/api/login', loginRoute);
 app.use('/api/profile', profileRoute);
 app.use('/api/logout', logoutRoute);
 app.use('/api/leaderboard', leaderboardRoute);
-app.use('api/yesterday', yesterdayRoute);
+app.use('/api/yesterday', yesterdayRoute);
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
