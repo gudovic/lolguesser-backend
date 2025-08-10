@@ -58,6 +58,28 @@ router.get('/top', async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 });
+// routes/wam.js
+const WamVisit = require('../models/WamVisit');
 
+router.post('/track-visit', async (req, res) => {
+  try {
+    const { uuid } = req.body;
+    if (!uuid) return res.status(400).json({ error: 'No UUID provided' });
+
+    await WamVisit.updateOne(
+      { uuid },
+      {
+        $setOnInsert: { uuid, firstSeen: new Date() },
+        $set: { lastSeen: new Date() }
+      },
+      { upsert: true }
+    );
+
+    res.json({ ok: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
 
 module.exports = router;
