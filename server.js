@@ -14,12 +14,14 @@ const statsRoute = require('./routes/stats');
 const leaderboardRoute = require('./routes/leaderboard');
 const yesterdayRoute = require('./routes/yesterday');
 
+const wamRoute = require('./routes/wam');
+
 dotenv.config();
 
 const app = express();
 
 app.use(cors({
-  origin: ['http://localhost:5500', 'https://lolguesser.netlify.app', 'https://lolgiss.com', 'https://www.lolgiss.com', 'https://api.lolgiss.com'],
+  origin: ['http://localhost:5500', 'https://lolguesser.netlify.app', 'https://lolgiss.com', 'https://www.lolgiss.com', 'https://api.lolgiss.com', 'https://whackarim.vercel.app', 'https://lolguesser-backend.onrender.com'],
   credentials: true
 }));
 app.use(express.json());
@@ -34,6 +36,7 @@ app.use('/api/profile', profileRoute);
 app.use('/api/logout', logoutRoute);
 app.use('/api/leaderboard', leaderboardRoute);
 app.use('/api/yesterday', yesterdayRoute);
+app.use('/api/wam', wamRoute);
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
