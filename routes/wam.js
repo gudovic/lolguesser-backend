@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const WamScore = require('../models/WamScore');
+const WamScore = require('../models/Wamscore');
 
 router.post('/', async (req, res) => {
   try {
