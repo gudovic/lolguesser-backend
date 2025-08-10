@@ -27,44 +27,37 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.get('/top/:name', async (req, res) => {
+router.get('/top', async (req, res) => {
   try {
-    const displayName = req.params.name.trim();
-    const normalized = displayName.toLowerCase();
+    const q = (req.query.name || '').trim();
+    const normalized = q ? q.toLowerCase() : null;
 
-    // Get top 10
-    const top = await WamScore.find()
+    const topDocs = await WamScore.find()
       .sort({ high: -1, updatedAt: 1 })
       .limit(10)
       .lean();
 
-    // Find user's rank & score
-    const userDoc = await WamScore.findOne({ name: normalized }).lean();
-    let userRank = null;
-    if (userDoc) {
-      userRank = await WamScore.countDocuments({
-        high: { $gt: userDoc.high }
-      }) + 1; // rank = #people above + 1
+    const top = topDocs.map((s, i) => ({
+      rank: i + 1,
+      name: s.displayName,
+      high: s.high,
+    }));
+
+    let you = null;
+    if (normalized) {
+      const userDoc = await WamScore.findOne({ name: normalized }).lean();
+      if (userDoc) {
+        const rank = await WamScore.countDocuments({ high: { $gt: userDoc.high } }) + 1;
+        you = { rank, name: userDoc.displayName, high: userDoc.high };
+      }
     }
 
-    res.json({
-      top: top.map((s, i) => ({
-        rank: i + 1,
-        name: s.displayName,
-        high: s.high
-      })),
-      you: userDoc
-        ? {
-            rank: userRank,
-            name: userDoc.displayName,
-            high: userDoc.high
-          }
-        : null
-    });
+    res.json({ top, you });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Server error' });
   }
 });
+
 
 module.exports = router;
